@@ -18,10 +18,11 @@ import { TodoBox } from "../components/TodoBox";
 import { MOCK_BOOKS, MOCK_CATEGORIES } from "../data/mockBooks"; // ← dữ liệu GIẢ
 import { PriceRange } from "../utils/filters";
 import { TabScreenProps } from "../navigation/types";
+import { useCart } from "../store/hooks";
 import { colors } from "../theme";
 
 export function HomeScreen({ navigation }: TabScreenProps<"Home">) {
-  // TODO BT7.3d: lấy { totalQuantity } từ useCart() và truyền vào <FloatingCartButton count=... />
+  const { totalQuantity } = useCart();
 
   // TODO BT7.5b: thay dữ liệu giả bằng state: books, categories, loading, error  (useState)
   //   rồi viết hàm load() gọi SONG SONG: const [b, c] = await Promise.all([getBooks(), getCategories()])
@@ -68,7 +69,7 @@ export function HomeScreen({ navigation }: TabScreenProps<"Home">) {
           </View>
         }
       />
-      <FloatingCartButton count={0} onPress={() => navigation.navigate("Cart")} />
+      <FloatingCartButton count={totalQuantity} onPress={() => navigation.navigate("Cart")} />
     </View>
   );
 }
